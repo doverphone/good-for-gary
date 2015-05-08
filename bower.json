@@ -1,0 +1,23 @@
+{
+  "name": "gfg",
+  "version": "0.0.1",
+  "authors": [
+    "Ben Doherty <ben@bendoherty.net>"
+  ],
+  "description": "good for gary website",
+  "license": "MIT",
+  "homepage": "http://www.goodforgary.com",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.4",
+    "jquery": "~2.1.4",
+    "mustache": "~2.0.0"
+  }
+}

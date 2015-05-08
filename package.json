@@ -1,0 +1,22 @@
+{
+  "name": "gfg",
+  "version": "0.0.1",
+  "description": "Good For Gary Website",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "browser-sync": "~2.6.9",
+    "gulp": "~3.8.11",
+    "gulp-concat-css": "~2.2.0",
+    "gulp-cssmin": "~0.1.7",
+    "gulp-less": "~3.0.3",
+    "gulp-livereload": "~3.8.0",
+    "gulp-rename": "~1.2.2",
+    "gulp-watch": "~4.2.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ben Doherty",
+  "license": "ISC"
+}

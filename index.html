@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="styles/styles.min.css" rel="stylesheet" type="text/css">
+
+<title>Good For Gary</title>
+</head>
+<body>
+
+<header>
+	<div class="video-wrapper">
+		<video class="background-video" autoplay muted="true">
+			<source src="media/video/promo-2014.mp4" type="video/mp4">
+			<source src="media/video/promo-2014.webm" type="video/webm">
+		</video>
+	</div>
+	<h1 class="text-image logo">Good For Gary</h1>
+	<h2 class="text-image tagline">Ridiculously Entertaining</h2>
+</header>
+
+<nav>
+	<div class="nav-bar">
+		<ul class="nav-menu">
+			<li class="nav-link">HOME</li>
+			<li class="nav-link">SHOWS</li>
+			<li class="nav-link">ABOUT</li>
+			<li class="nav-link">SONGS</li>s
+			<li class="nav-link">BOOKING</li>
+		</ul>
+	</div>
+</nav>
+
+
+<!-- 
+<section id="home">
+	<div class="content">
+
+	</div>
+</section>
+ -->
+<section id="calendar">
+	<h1>Calendar</h1>
+	<div class="content">
+
+</section>
+<section id="songs">
+	<h1>Songs</h1>
+	<div class="content">
+		
+	</div>
+</section>
+<!-- 
+
+<section id="videos">
+	<h1>Calendar</h1>
+	<div class="content">
+		
+	</div>
+</section>
+
+<section id="booking">
+	<h1>Calendar</h1>
+	<div class="content">
+		
+	</div>
+</section>
+ -->
+<!-- <div class="background center-image"></div> -->
+<!-- <div class="logo center-image"></div>
+ -->		
+	<!-- <div class="nav">
+		<ul class="nav-links">
+			<li class="nav-link">Home</li>
+			<li class="nav-link">Shows</li>
+			<li class="nav-link">Videos</li>
+			<li class="nav-link">Booking</li>
+			<li class="nav-link">Song List</li>
+		</ul>
+	</div> -->
+
+
+
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/mustache/mustache.min.js"></script>
+<script src="js/main.js"></script>
+<script src="js/calendar.js"></script>
+<script id="template" type="x-tmpl-mustache">
+<table class="table" id="calendar-table">
+	<thead>
+		<tr>
+			<th>Venue</th>
+			<th>Date</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{#shows}}
+			<tr>
+				<td>{{venue}}</td>
+				<td>{{date}}</td>
+			</tr>
+		{{/shows}}
+	</tbody>
+</table>
+</script>
+</body>
+</html>
