@@ -6,11 +6,11 @@ var gulp = require('gulp'),
 	rename = require('gulp-rename'),
 	cssConcat = require('gulp-concat-css'),
 	browserSync = require('browser-sync').create(),
-	reload = browserSync.reload;
+	reload = browserSync.reload, 
+	jshint = require('gulp-jshint');
 
 
-gulp.task('less', function() {
-	
+gulp.task('less', function() {	
 	return gulp.src('./styles/**/master.less')
 		.pipe(less())
 		.pipe(cssConcat("styles/styles.css"))
@@ -20,18 +20,22 @@ gulp.task('less', function() {
 		.pipe(reload({stream: true}));
 });
 
+gulp.task('jshint', function() {
+	return gulp.src('./js/**/*.js')
+		.pipe(jshint())
+		.pipe(jshint.reporter('jshint-stylish'));
+});
+
 gulp.task('watch', function() {
 	gulp.watch('./styles/less/*.less', ['less']);
-})
+	gulp.watch('./js/**/*.js', ['jshint']).on('change', reload);
+	gulp.watch('./*.html').on('change', reload);
+});
 
-gulp.task('serve', ['less'], function() {
+gulp.task('serve', function() {
 	browserSync.init({
 		server: "./"
 	});
+});
 
-	gulp.watch('./styles/less/*.less', ['less']);
-	gulp.watch('./*.html').on('change', reload);
-	gulp.watch('./js/*.js').on('change', reload);
-})
-
-gulp.task('default', ['serve']);
+gulp.task('default', ['serve', 'watch']);

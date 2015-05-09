@@ -13,7 +13,11 @@
     "gulp-rename": "~1.2.2",
     "gulp-watch": "~4.2.4"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "gulp-jshint": "^1.10.0",
+    "jshint": "^2.7.0",
+    "jshint-stylish": "^1.0.2"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

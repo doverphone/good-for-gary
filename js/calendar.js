@@ -3,8 +3,6 @@
 	var timeMin = getDateString(0),
 		timeMax = getDateString(3);
 
-
-
 	$.ajax({
 		url: "https://clients6.google.com/calendar/v3/calendars/goodforgary@yahoo.com/events?calendarId=goodforgary%40yahoo.com&singleEvents=true&timeZone=America%2FChicago&maxResults=250&sanitizeHtml=true&timeMin="+timeMin+"&timeMax="+timeMax+"&key=AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs",
 		dataType: "json",
@@ -36,7 +34,7 @@
 	}
 
 	function format(show) {
-		return { venue: getVenueName(show), date: show.start.date }
+		return { venue: getVenueName(show), date: show.start.date };
 	}
 
 	function sort(a, b) {
