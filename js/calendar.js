@@ -65,9 +65,6 @@
 
 	function formatDateString(date) {
 		var day = formatDayString(date.getDate() + 1);
-		if (DAY_NAMES[date.getDay() + 1] === undefined ) {
-			console.log('date: ', date, date.getDay());
-		}
 		return DAY_NAMES[(date.getDay() + 1) % 7] + ", " + day;
 	}
 
