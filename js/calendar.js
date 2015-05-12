@@ -1,5 +1,10 @@
 (function() {
+	
+	// TODO: move all this to backend
 
+	var MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+		DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+	
 	var timeMin = getDateString(0),
 		timeMax = getDateString(3);
 
@@ -12,17 +17,36 @@
 	function getDateString(monthsFromToday) {
 		var date = new Date();
 		
-		date.setDate(1);
+		date.setDate(0);
 		date.setMonth(monthsFromToday + date.getMonth());
 
 		return date.toISOString();
 	}
 
 	function processCalendarEvents(response) {
-		var shows = response.items.filter(filter).map(format).sort(sort);
+		var calendar = [], 
+			currentMonth = new Date().getMonth(),
+			shows = response.items.filter(filter).map(format).sort(sort);
 
-		console.log(shows);
-		render(shows);
+		calendar.push({
+			month: MONTH_NAMES[currentMonth], 
+			shows: getShowsByMonth(currentMonth)
+		}, {
+			month: MONTH_NAMES[currentMonth + 1], 
+			shows: getShowsByMonth(currentMonth + 1)
+		}, {
+			month: MONTH_NAMES[currentMonth + 2], 
+			shows: getShowsByMonth(currentMonth + 2)
+		});
+
+		function getShowsByMonth(month) {
+			return shows.filter(function(show) {
+				return show.dateObj.getMonth() === month;
+			});
+		}
+
+		render(calendar);
+	
 	}
 
 	function filter(show) {
@@ -34,17 +58,48 @@
 	}
 
 	function format(show) {
-		return { venue: getVenueName(show), date: show.start.date };
+		var date = new Date(show.start.date);
+		date.setHours(21);
+		return { venue: getVenueName(show), dateString: formatDateString(date), dateObj: date };
+	}
+
+	function formatDateString(date) {
+		var day = formatDayString(date.getDate() + 1);
+		if (DAY_NAMES[date.getDay() + 1] === undefined ) {
+			console.log('date: ', date, date.getDay());
+		}
+		return DAY_NAMES[(date.getDay() + 1) % 7] + ", " + day;
+	}
+
+	function formatDayString(day) {
+		var dayString = day % 10;
+
+		switch (dayString) {
+			case 1:
+				dayString += (day === 11) ? "th" : "st";
+			break;
+			case 2:
+				dayString += (day === 12) ? "th" : "nd";
+			break;
+			case 3: 
+				dayString += (day === 13) ? "th" : "rd";
+			break;
+			default:
+				dayString += "th";
+			break;
+		}
+
+		return dayString;
+
 	}
 
 	function sort(a, b) {
-		return b.date < a.date ? 1 : -1;
+		return b.dateObj < a.dateObj ? 1 : -1;
 	}
 
-	function render(shows) {
-		var tpl = $('#template').html();
-		var html = Mustache.render(tpl, {shows: shows});
-		console.log(Mustache, html);
+	function render(calendar) {
+		var tpl = $('#template').html(),
+			html = Mustache.render(tpl, {calendar: calendar});
 		$('#calendar .content').html(html);
 	}
 

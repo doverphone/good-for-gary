@@ -74,22 +74,25 @@
 <script src="js/main.js"></script>
 <script src="js/calendar.js"></script>
 <script id="template" type="x-tmpl-mustache">
-<table class="table" id="calendar-table">
-	<thead>
-		<tr>
-			<th>Venue</th>
-			<th>Date</th>
-		</tr>
-	</thead>
-	<tbody>
-		{{#shows}}
+{{#calendar}}
+	<h1>{{month}}</h1>
+	<table class="table" id="calendar-table">
+		<thead>
 			<tr>
-				<td>{{venue}}</td>
-				<td>{{date}}</td>
+				<th>Date</th>
+				<th>Venue</th>
 			</tr>
-		{{/shows}}
-	</tbody>
-</table>
+		</thead>
+		<tbody>
+			{{#shows}}
+				<tr>
+					<td>{{dateString}}</td>
+					<td>{{venue}}</td>
+				</tr>
+			{{/shows}}
+		</tbody>
+	</table>
+{{/calendar}}
 </script>
 </body>
 </html>
