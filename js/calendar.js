@@ -3,6 +3,7 @@
 	// TODO: move all this to backend
 
 	var MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+		MONTH_NAMES_ABBR = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
 		DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 	
 	var timeMin = getDateString(0),
@@ -29,13 +30,13 @@
 			shows = response.items.filter(filter).map(format).sort(sort);
 
 		calendar.push({
-			month: MONTH_NAMES[currentMonth], 
+			month: MONTH_NAMES_ABBR[currentMonth], 
 			shows: getShowsByMonth(currentMonth)
 		}, {
-			month: MONTH_NAMES[currentMonth + 1], 
+			month: MONTH_NAMES_ABBR[currentMonth + 1], 
 			shows: getShowsByMonth(currentMonth + 1)
 		}, {
-			month: MONTH_NAMES[currentMonth + 2], 
+			month: MONTH_NAMES_ABBR[currentMonth + 2], 
 			shows: getShowsByMonth(currentMonth + 2)
 		});
 
@@ -60,7 +61,7 @@
 	function format(show) {
 		var date = new Date(show.start.date);
 		date.setHours(21);
-		return { venue: getVenueName(show), dateString: formatDateString(date), dateObj: date };
+		return { venue: getVenueName(show), dateString: formatDayString(date.getDate() + 1), dateObj: date };
 	}
 
 	function formatDateString(date) {
@@ -73,20 +74,20 @@
 
 		switch (dayString) {
 			case 1:
-				dayString += (day === 11) ? "th" : "st";
+				dayString = (day === 11) ? "th" : "st";
 			break;
 			case 2:
-				dayString += (day === 12) ? "th" : "nd";
+				dayString = (day === 12) ? "th" : "nd";
 			break;
 			case 3: 
-				dayString += (day === 13) ? "th" : "rd";
+				dayString = (day === 13) ? "th" : "rd";
 			break;
 			default:
-				dayString += "th";
+				dayString = "th";
 			break;
 		}
 
-		return dayString;
+		return day + dayString;
 
 	}
 
