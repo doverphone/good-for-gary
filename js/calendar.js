@@ -61,7 +61,7 @@
 	function format(show) {
 		var date = new Date(show.start.date);
 		date.setHours(21);
-		return { venue: getVenueName(show), dateString: formatDayString(date.getDate() + 1), dateObj: date };
+		return { venue: getVenueName(show), dateString: date.getDate(), dateObj: date };
 	}
 
 	function formatDateString(date) {
