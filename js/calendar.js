@@ -1,5 +1,4 @@
 (function() {
-	
 	// TODO: move all this to backend
 
 	var MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
@@ -9,8 +8,12 @@
 	var timeMin = getDateString(0),
 		timeMax = getDateString(3);
 
+	var now = new Date(),
+		currentMonth = now.getMonth(),
+		currentDate = now.getDate();
+
 	$.ajax({
-		url: "https://clients6.google.com/calendar/v3/calendars/goodforgary@yahoo.com/events?calendarId=goodforgary%40yahoo.com&singleEvents=true&timeZone=America%2FChicago&maxResults=250&sanitizeHtml=true&timeMin="+timeMin+"&timeMax="+timeMax+"&key=AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs",
+		url: "https://clients6.google.com/calendar/v3/calendars/goodforgary@yahoo.com/events?calendarId=goodforgary%40yahoo.com&singleEvents=true&timeZone=America%2FChicago&maxResults=250&sanitizeHtml=true&timeMin="+timeMin+"&timeMax="+timeMax+"&key=AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs&orderBy=startTime",
 		dataType: "json",
 		success: processCalendarEvents
 	});
@@ -26,23 +29,22 @@
 
 	function processCalendarEvents(response) {
 		var calendar = [], 
-			currentMonth = new Date().getMonth(),
-			shows = response.items.filter(filter).map(format).sort(sort);
+			shows = response.items.filter(filter).map(format);
 
 		calendar.push({
-			month: MONTH_NAMES_ABBR[currentMonth], 
+			month: MONTH_NAMES[currentMonth], 
 			shows: getShowsByMonth(currentMonth)
 		}, {
-			month: MONTH_NAMES_ABBR[currentMonth + 1], 
+			month: MONTH_NAMES[currentMonth + 1], 
 			shows: getShowsByMonth(currentMonth + 1)
 		}, {
-			month: MONTH_NAMES_ABBR[currentMonth + 2], 
+			month: MONTH_NAMES[currentMonth + 2], 
 			shows: getShowsByMonth(currentMonth + 2)
 		});
 
 		function getShowsByMonth(month) {
 			return shows.filter(function(show) {
-				return show.dateObj.getMonth() === month;
+				return Number(show.month) === month + 1;
 			});
 		}
 
@@ -58,10 +60,39 @@
 		return (/(wedding|private)/i).test(show.summary) ? "Private Event" : show.summary.split("@")[1].trim();
 	}
 
+	function isAcoustic(show) {
+		return show.summary.toLowerCase().indexOf('acoustic') !== -1;
+	}
+
+	function getTimeString(show) {
+		var partial = show.summary.split('@')[0],
+			start = partial.indexOf('('),
+			end = partial.indexOf(')'),
+			timeStr = "9:00pm";
+
+			if (start !== -1 && end !== -1) {
+				timeStr = partial.substring(start + 1, end) + "pm";
+			}
+
+		return timeStr;
+	}
+
+	function isInPast(parsedDate) {
+		return parsedDate[1] <= (currentMonth + 1) && parsedDate[2] < currentDate;
+	}
+
 	function format(show) {
-		var date = new Date(show.start.date);
-		date.setHours(21);
-		return { venue: getVenueName(show), dateString: date.getDate(), dateObj: date };
+		var date = new Date(show.start.date),
+			parsedDate = show.start.date.split('-');
+		return { 
+			venue: getVenueName(show),
+			time: getTimeString(show),
+			day: parsedDate[2],
+			month: parsedDate[1],
+			isAcoustic: isAcoustic(show),
+			isInPast: isInPast(parsedDate),
+			dateObj: date 
+		};
 	}
 
 	function formatDateString(date) {
@@ -98,7 +129,21 @@
 	function render(calendar) {
 		var tpl = $('#template').html(),
 			html = Mustache.render(tpl, {calendar: calendar});
-		$('#calendar .content').html(html);
+		$('.calendar-content').html(html);
 	}
+
+	function setFilter(filter) {
+		$('.calendar').removeClass('hide-shows').attr('data-filter', filter);
+	}
+
+	function setActiveState(button) {
+		$('#calendarFilters button').removeClass('active');
+		$(button).addClass('active');
+	}
+
+	$('#calendarFilters').on('click', 'button', function() {
+		setActiveState(this);
+		setFilter($(this).data('filter'));
+	})
 
 })();
