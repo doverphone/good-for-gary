@@ -144,6 +144,6 @@
 	$('#calendarFilters').on('click', 'button', function() {
 		setActiveState(this);
 		setFilter($(this).data('filter'));
-	})
+	});
 
 })();
