@@ -21,7 +21,7 @@ gulp.task('less', function() {
 		.pipe(cssConcat("./css/styles.css"))
 		.pipe(cssmin())
 		.pipe(rename({suffix: '.min'}))
-		.pipe(gulp.dest('./dist'))
+		.pipe(gulp.dest('./'))
 		.pipe(reload({stream: true}));
 });
 
