@@ -87,22 +87,40 @@
 	background-image: url(../../images/kirk.jpg);
 }
 
-
-
 .calendar {
+	.in-the-past {
+		.venue {
+			text-decoration: line-through;
+		}
+	}
 	.date {
-		height: 45px;
-		width: 45px;
-		line-height: 45px;
-		font-size: 25px;
+		height: 30px;
+		width: 30px;
+		line-height: 30px;
+		font-size: 18px;
 		font-weight: bold;
 		text-align: center;
 		display: inline-block;
-		background-color: #2980b9;
+		background-color: @brand-primary;
 		color: #FFF;
-
 	}
 	.venue {
+		font-size: 16px;
+		text-align: left;
 		vertical-align: middle;
+		p {
+			margin: 0;
+		}
+	}
+
+	&[data-filter="full-band-only"] .acoustic-show,
+	&[data-filter="acoustic-only"] .full-band-show {
+		td {
+			padding: 0;
+			border-width: 0;
+		}
+		.cell-container {
+			display: none;
+		}
 	}
 }
