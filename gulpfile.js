@@ -35,7 +35,8 @@ gulp.task('compress-vendor-js',function() {
 	var vendorSource = ['./bower_components/jquery/dist/jquery.min.js',
 						'./bower_components/jquery.easing/js/jquery.easing.min.js', 
 						'./bower_components/bootstrap/dist/js/bootstrap.min.js',
-						'./bower_components/mustache/mustache.min.js'];
+						'./bower_components/mustache/mustache.min.js',
+						'./js/vendor/*.js'];
 	return gulp.src(vendorSource)
 		.pipe(uglify())
 		.pipe(concat('vendor.min.js'))
