@@ -1,0 +1,9 @@
+@import url("http://hello.myfonts.net/count/2e4f80");
+@font-face {
+	font-family: 'PricedownBl-Regular';
+	src: url('2E4F80_0_0.eot');
+	src: url('2E4F80_0_0.eot?#iefix') format('embedded-opentype'),
+		 url('2E4F80_0_0.woff2') format('woff2'),
+		 url('2E4F80_0_0.woff') format('woff'),
+		 url('2E4F80_0_0.ttf') format('truetype');
+}
