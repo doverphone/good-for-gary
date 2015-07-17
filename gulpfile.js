@@ -33,10 +33,10 @@ gulp.task('jshint', function() {
 });
 
 gulp.task('compress-vendor-js',function() {
-	var vendorSource = ['./bower_components/jquery/dist/jquery.min.js',
-						'./bower_components/jquery.easing/js/jquery.easing.min.js', 
-						'./bower_components/bootstrap/dist/js/bootstrap.min.js',
-						'./bower_components/mustache/mustache.min.js',
+	var vendorSource = ['./node_modules/jquery/dist/jquery.min.js',
+						'./node_modules/jquery.easing/js/jquery.easing.min.js', 
+						'./node_modules/bootstrap/dist/js/bootstrap.min.js',
+						'./node_modules/mustache/mustache.min.js',
 						'./src/js/vendor/*.js'];
 	return gulp.src(vendorSource)
 		.pipe(uglify())
