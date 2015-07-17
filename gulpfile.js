@@ -13,7 +13,9 @@ var gulp = require('gulp'),
 	browserSync = require('browser-sync').create(),
 	reload = browserSync.reload, 
 	jshint = require('gulp-jshint')
-	del = require('del');
+	del = require('del'),
+	ftpconfig = require('./ftpconfig'),
+	ftp = require('vinyl-ftp');
 
 
 gulp.task('less', function() {	
@@ -34,7 +36,7 @@ gulp.task('jshint', function() {
 
 gulp.task('compress-vendor-js',function() {
 	var vendorSource = ['./node_modules/jquery/dist/jquery.min.js',
-						'./node_modules/jquery.easing/js/jquery.easing.min.js', 
+						'./node_modules/jquery.easing/jquery.easing.min.js', 
 						'./node_modules/bootstrap/dist/js/bootstrap.min.js',
 						'./node_modules/mustache/mustache.min.js',
 						'./src/js/vendor/*.js'];
@@ -97,6 +99,24 @@ gulp.task('serve', function() {
 	browserSync.init({
 		server: "./dist"
 	});
+});
+
+gulp.task('stage', function() {
+	process.stdout.write('Transfering files...\n');
+    var conn = ftp.create(ftpconfig.staging);
+    return gulp.src('dist/**/*', {base: './dist', buffer: false})
+	    .pipe(conn.newer('/'))
+	    .pipe(conn.dest('/'));
+    process.stdout.write('Transfer complete...\n');
+});
+
+gulp.task('deploy', function() {
+	process.stdout.write('Transfering files...\n');
+    var conn = ftp.create(ftpconfig.production);
+    return gulp.src('dist/**/*', {base: './dist', buffer: false}) 
+    	.pipe(conn.newer('/'))
+    	.pipe(conn.dest('/'));
+    process.stdout.write('Transfer complete...\n');
 });
 
 gulp.task('default', ['serve', 'watch']);
