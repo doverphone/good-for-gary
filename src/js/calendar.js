@@ -32,14 +32,14 @@
 			shows = response.items.filter(filter).map(format);
 
 		calendar.push({
-			month: MONTH_NAMES[currentMonth], 
+			month: MONTH_NAMES[currentMonth % 12], 
 			shows: getShowsByMonth(currentMonth)
 		}, {
-			month: MONTH_NAMES[currentMonth + 1], 
-			shows: getShowsByMonth(currentMonth + 1)
+			month: MONTH_NAMES[(currentMonth + 1) % 12], 
+			shows: getShowsByMonth((currentMonth + 1) % 12)
 		}, {
-			month: MONTH_NAMES[currentMonth + 2], 
-			shows: getShowsByMonth(currentMonth + 2)
+			month: MONTH_NAMES[(currentMonth + 2) % 12], 
+			shows: getShowsByMonth((currentMonth + 2) % 12)
 		});
 
 		function getShowsByMonth(month) {
