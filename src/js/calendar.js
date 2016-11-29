@@ -10,7 +10,8 @@
 
 	var now = new Date(),
 		currentMonth = now.getMonth(),
-		currentDate = now.getDate();
+		currentDate = now.getDate(),
+		currentYear = now.getFullYear();
 
 	$.ajax({
 		url: "https://clients6.google.com/calendar/v3/calendars/goodforgary@yahoo.com/events?calendarId=goodforgary%40yahoo.com&singleEvents=true&timeZone=America%2FChicago&maxResults=250&sanitizeHtml=true&timeMin="+timeMin+"&timeMax="+timeMax+"&key=AIzaSyBNlYH01_9Hc5S1J9vuFmu2nUqBZJNAXxs&orderBy=startTime",
@@ -78,7 +79,7 @@
 	}
 
 	function isInPast(parsedDate) {
-		return parsedDate[1] <= (currentMonth + 1) && parsedDate[2] < currentDate;
+		return parsedDate[1] <= (currentMonth + 1) && parsedDate[2] < currentDate && Number(parsedDate[0]) <= currentYear;
 	}
 
 	function format(show) {
