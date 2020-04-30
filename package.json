@@ -21,7 +21,7 @@
     "imagemin-optipng": "^6.0.0",
     "imagemin-svgo": "^7.0.0",
     "jpegtran": "^1.0.6",
-    "jquery": "^2.2.4",
+    "jquery": "^3.5.0",
     "jquery.easing": "^1.4.1",
     "mustache": "^2.3.2",
     "node-gyp": "^3.8.0",
